@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>おばさん,s 隊 ファンクラブ</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Zen Maru Gothic & M PLUS Rounded 1c (Japanese Pop Fonts) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;900&family=Zen+Maru+Gothic:wght@500;700;900&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Zen Maru Gothic"', '"M PLUS Rounded 1c"', 'sans-serif'],
+                    },
+                    colors: {
+                        pop: {
+                            pink: '#ff66c4',
+                            yellow: '#ffde59',
+                            cyan: '#00c2cb',
+                            orange: '#ff914d',
+                            purple: '#8c52ff',
+                            lightBg: '#fffaf6',
+                            text: '#33272a'
+                        }
+                    },
+                    boxShadow: {
+                        'pop': '4px 4px 0px #33272a',
+                        'pop-lg': '6px 6px 0px #33272a',
+                        'pop-pink': '4px 4px 0px #ff66c4',
+                        'pop-yellow': '4px 4px 0px #ffde59',
+                        'soft-glow': '0 10px 25px -5px rgba(255, 102, 196, 0.3)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Keyframe Animations for Pop Sparkles & Bouncing */
+        @keyframes float-slow {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-12px) rotate(4deg);
+            }
+        }
+
+        @keyframes float-fast {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-18px) rotate(-6deg);
+            }
+        }
+
+        @keyframes pulse-bounce {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.08);
+            }
+        }
+
+        .animate-float1 {
+            animation: float-slow 4s ease-in-out infinite;
+        }
+
+        .animate-float2 {
+            animation: float-fast 3.2s ease-in-out infinite;
+        }
+
+        .animate-bounce-custom {
+            animation: pulse-bounce 2s infinite;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #fffaf6;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #ff66c4;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff914d;
+        }
+
+        /* Glass Floating Header */
+        .pop-header {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
+            border-bottom: 3px solid #33272a;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-pop-lightBg text-pop-text font-sans antialiased selection:bg-pop-pink selection:text-white min-h-screen flex flex-col tracking-wide">
+
+    <nav class="fixed top-0 left-0 right-0 z-50 pop-header transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Brand Logo -->
+                <a href="#" class="flex items-center gap-2 group">
+                    <div class="flex flex-col">
+                        <span
+                            class="font-black text-xl sm:text-2xl tracking-wider text-pop-text flex items-center gap-1">
+                            おばさん,s 隊
+                        </span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden lg:flex items-center space-x-6 font-bold text-sm">
+                    <a href="#news" class="hover:text-pop-pink transition-colors py-1 flex items-center gap-1"><i
+                            class="fa-solid fa-sparkles text-pop-yellow"></i> ニュース</a>
+                    <a href="#discography" class="hover:text-pop-pink transition-colors py-1 flex items-center gap-1"><i
+                            class="fa-solid fa-compact-disc text-pop-cyan"></i> 楽曲</a>
+                    <a href="#schedule" class="hover:text-pop-pink transition-colors py-1 flex items-center gap-1"><i
+                            class="fa-solid fa-ticket text-pop-orange"></i> ライブ</a>
+                    <a href="#gallery" class="hover:text-pop-pink transition-colors py-1 flex items-center gap-1"><i
+                            class="fa-solid fa-camera text-pop-purple"></i> ギャラリー</a>
+                    <a href="#cheer" class="hover:text-pop-pink transition-colors py-1 flex items-center gap-1"><i
+                            class="fa-solid fa-heart text-pop-pink"></i> 応援掲示板</a>
+                </div>
+
+                <!-- CTA Button -->
+                <div class="hidden lg:flex items-center">
+                    <button onclick="scrollToSection('membership')"
+                        class="px-6 py-2.5 rounded-full text-sm font-black bg-pop-yellow text-pop-text border-2 border-pop-text shadow-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-paper-plane text-pop-pink"></i> 今すぐ入会！
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="lg:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="p-2 text-pop-text text-2xl focus:outline-none">
+                        <i class="fa-solid fa-bars-staggered"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div class="hidden lg:hidden bg-white border-b-4 border-pop-text px-6 py-6 space-y-4 shadow-pop"
+            id="mobile-menu">
+            <a href="#news" onclick="toggleMobileMenu()"
+                class="block font-bold text-base text-pop-text hover:text-pop-pink"><i
+                    class="fa-solid fa-sparkles text-pop-yellow mr-2"></i> ニュース</a>
+            <a href="#discography" onclick="toggleMobileMenu()"
+                class="block font-bold text-base text-pop-text hover:text-pop-pink"><i
+                    class="fa-solid fa-compact-disc text-pop-cyan mr-2"></i> ディスコグラフィ</a>
+            <a href="#schedule" onclick="toggleMobileMenu()"
+                class="block font-bold text-base text-pop-text hover:text-pop-pink"><i
+                    class="fa-solid fa-ticket text-pop-orange mr-2"></i> ライブスケジュール</a>
+            <a href="#gallery" onclick="toggleMobileMenu()"
+                class="block font-bold text-base text-pop-text hover:text-pop-pink"><i
+                    class="fa-solid fa-camera text-pop-purple mr-2"></i> フォトギャラリー</a>
+            <a href="#cheer" onclick="toggleMobileMenu()"
+                class="block font-bold text-base text-pop-text hover:text-pop-pink"><i
+                    class="fa-solid fa-heart text-pop-pink mr-2"></i> 応援掲示板</a>
+            <a href="#membership" onclick="toggleMobileMenu()"
+                class="block font-bold text-base text-pop-text hover:text-pop-pink"><i
+                    class="fa-solid fa-crown text-pop-yellow mr-2"></i> 入会案内</a>
+            <button onclick="scrollToSection('membership'); toggleMobileMenu()"
+                class="w-full mt-4 py-3 rounded-full text-center font-black bg-pop-pink text-white border-2 border-pop-text shadow-pop">
+                今すぐファンクラブに入る！
+            </button>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header
+        class="relative pt-32 pb-20 md:pt-44 md:pb-32 overflow-hidden bg-gradient-to-b from-white via-pop-lightBg to-pop-lightBg">
+        <!-- Background Floating Decor Icons -->
+        <div class="absolute top-24 left-10 text-pop-pink text-4xl opacity-30 animate-float1 pointer-events-none"><i
+                class="fa-solid fa-music"></i></div>
+        <div class="absolute top-40 right-12 text-pop-yellow text-5xl opacity-40 animate-float2 pointer-events-none"><i
+                class="fa-solid fa-star"></i></div>
+        <div class="absolute bottom-16 left-1/4 text-pop-cyan text-3xl opacity-30 animate-float1 pointer-events-none"><i
+                class="fa-solid fa-bolt"></i></div>
+        <div class="absolute top-1/2 right-1/4 text-pop-orange text-4xl opacity-30 animate-float2 pointer-events-none">
+            <i class="fa-solid fa-heart"></i>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+
+                <!-- Hero Left Copy -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <h1 class="font-black text-4xl sm:text-6xl md:text-7xl leading-tight text-pop-text">
+                        <span
+                            class="text-pop-pink underline decoration-pop-yellow decoration-wavy decoration-4">おばさん</span>に<br>なってみたい！
+                    </h1>
+
+                    <p
+                        class="font-medium text-pop-text/80 text-base sm:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0">
+                        「おばさん,s 隊」公式ファンクラブ『おばさん,s 隊 ファンクラブ』へようこそ！<br>
+                        チケット先行・オフショット動画・ファンのみなさんへのプレゼントなど、特典が盛りだくさん♪
+                    </p>
+
+                    <!-- Action Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
+                        <button onclick="scrollToSection('membership')"
+                            class="px-8 py-4 rounded-full font-black text-base bg-pop-pink text-white border-2 border-pop-text shadow-pop hover:bg-pop-orange hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all animate-bounce-custom">
+                            <i class="fa-solid fa-star mr-1"></i> 新規入会はこちら！
+                        </button>
+                        <a href="#news"
+                            class="px-8 py-4 rounded-full font-black text-base bg-white text-pop-text border-2 border-pop-text shadow-pop hover:bg-pop-yellow hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-bullhorn text-pop-cyan"></i> 最新情報をチェック
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Hero Right Card Graphic -->
+                <div class="lg:col-span-5 flex justify-center">
+                    <div
+                        class="relative w-full max-w-sm sm:max-w-md aspect-[4/5] rounded-3xl p-4 bg-white border-4 border-pop-text shadow-pop-lg transform rotate-2 hover:rotate-0 transition-transform duration-500">
+                        <div class="w-full h-full rounded-2xl overflow-hidden relative border-2 border-pop-text">
+                            <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=800&q=80"
+                                alt="おばさん,s ライブステージ" class="w-full h-full object-cover">
+
+                            <!-- Overlay Badge -->
+                            <div
+                                class="absolute top-4 left-4 bg-pop-cyan text-white text-xs font-black px-3 py-1.5 rounded-full border-2 border-pop-text shadow-pop">
+                                LIVE IN PARINICHI 2026
+                            </div>
+
+                            <div
+                                class="absolute bottom-4 left-4 right-4 bg-white/95 p-4 rounded-xl border-2 border-pop-text shadow-pop">
+                                <p class="font-black text-lg text-pop-text">おばさん,s</p>
+                                <p class="text-xs font-bold text-pop-pink">NEW SINGLE 「おばさんX」 絶賛配信中！</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <!-- NEWS & TOPICS SECTION -->
+    <section id="news" class="py-20 bg-white border-t-4 border-pop-text">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                <div>
+                    <span class="text-sm font-black text-pop-pink uppercase tracking-widest flex items-center gap-1"><i
+                            class="fa-solid fa-sparkles"></i> INFORMATION</span>
+                    <h2 class="font-black text-3xl sm:text-4xl text-pop-text mt-1">最新ニュース & トピックス</h2>
+                </div>
+
+                <!-- Category Filter Tabs -->
+                <div class="mt-6 md:mt-0 flex flex-wrap gap-2">
+                    <button onclick="filterNews('all')"
+                        class="news-tab px-4 py-2 rounded-full text-xs font-black border-2 border-pop-text bg-pop-pink text-white shadow-pop transition-all"
+                        data-cat="all">すべて</button>
+                    <button onclick="filterNews('live')"
+                        class="news-tab px-4 py-2 rounded-full text-xs font-black border-2 border-pop-text bg-white text-pop-text hover:bg-pop-yellow shadow-pop transition-all"
+                        data-cat="live">ライブ</button>
+                    <button onclick="filterNews('release')"
+                        class="news-tab px-4 py-2 rounded-full text-xs font-black border-2 border-pop-text bg-white text-pop-text hover:bg-pop-yellow shadow-pop transition-all"
+                        data-cat="release">リリース</button>
+                    <button onclick="filterNews('fc')"
+                        class="news-tab px-4 py-2 rounded-full text-xs font-black border-2 border-pop-text bg-white text-pop-text hover:bg-pop-yellow shadow-pop transition-all"
+                        data-cat="fc">FC限定</button>
+                </div>
+            </div>
+
+            <!-- News Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <article
+                    class="news-item bg-pop-lightBg rounded-3xl p-5 border-3 border-pop-text shadow-pop hover:-translate-y-1 transition-all flex flex-col justify-between"
+                    data-cat="live">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span
+                                class="px-3 py-1 bg-pop-orange text-white text-xs font-black rounded-full border border-pop-text">ライブ</span>
+                            <span class="text-xs font-bold text-pop-text/60">2026.11.08</span>
+                        </div>
+                        <h3 class="font-black text-lg text-pop-text mb-2 line-clamp-2">ライブ2027「おばさんになってみたい」開催決定！</h3>
+                        <p class="text-xs text-pop-text/70 leading-relaxed line-clamp-3">
+                            最速チケット先行受付は本日よりスタート！</p>
+                    </div>
+                    <button
+                        onclick="openNewsModal('ライブ2027「おばさんになってみたい」開催決定！', '【FC先行受付期間】\n2026年11月8日(日) 12:00 ～ 11月30日(月) 23:59まで')"
+                        class="mt-4 pt-3 border-t-2 border-dashed border-pop-text/20 text-xs font-black text-pop-pink flex items-center justify-between hover:text-pop-orange">
+                        詳しく見る <i class="fa-solid fa-circle-arrow-right"></i>
+                    </button>
+                </article>
+
+                <!-- Card 2 -->
+                <article
+                    class="news-item bg-pop-lightBg rounded-3xl p-5 border-3 border-pop-text shadow-pop hover:-translate-y-1 transition-all flex flex-col justify-between"
+                    data-cat="release">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span
+                                class="px-3 py-1 bg-pop-cyan text-white text-xs font-black rounded-full border border-pop-text">リリース</span>
+                            <span class="text-xs font-bold text-pop-text/60">2026.10.25</span>
+                        </div>
+                        <h3 class="font-black text-lg text-pop-text mb-2 line-clamp-2">New Single「おばさんX」各配信サイトで全曲解禁！
+                        </h3>
+                        <p class="text-xs text-pop-text/70 leading-relaxed line-clamp-3">
+                            「おばさんX」がサブスクリプションで配信開始！</p>
+                    </div>
+                    <button
+                        onclick="openNewsModal('New Single「おばさんX」全曲解禁！', '待望のニューシングル「おばさんX」が配信開始されました！\n\nダンスも同時収録。ぜひお聴きください！')"
+                        class="mt-4 pt-3 border-t-2 border-dashed border-pop-text/20 text-xs font-black text-pop-pink flex items-center justify-between hover:text-pop-orange">
+                        詳しく見る <i class="fa-solid fa-circle-arrow-right"></i>
+                    </button>
+                </article>
+
+                <!-- Card 3 -->
+                <article
+                    class="news-item bg-pop-lightBg rounded-3xl p-5 border-3 border-pop-text shadow-pop hover:-translate-y-1 transition-all flex flex-col justify-between"
+                    data-cat="fc">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span
+                                class="px-3 py-1 bg-pop-pink text-white text-xs font-black rounded-full border border-pop-text">FC限定</span>
+                            <span class="text-xs font-bold text-pop-text/60">2026.10.12</span>
+                        </div>
+                        <h3 class="font-black text-lg text-pop-text mb-2 line-clamp-2">【FC限定】缶バッチなどの特典配布のお知らせ</h3>
+                        <p class="text-xs text-pop-text/70 leading-relaxed line-clamp-3">
+                            MV撮影の裏側に密着した限定動画を公開！さらに来週はFC限定オンライン生配信も実施予定です！</p>
+                    </div>
+                    <button onclick="openNewsModal('【FC限定】缶バッチなどの特典配布', 'FC会員限定の特典として、特別な缶バッチなどいろいろなグッズが配布されます！お楽しみに！')"
+                        class="mt-4 pt-3 border-t-2 border-dashed border-pop-text/20 text-xs font-black text-pop-pink flex items-center justify-between hover:text-pop-orange">
+                        詳しく見る <i class="fa-solid fa-circle-arrow-right"></i>
+                    </button>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- DISCOGRAPHY SECTION -->
+    <section id="discography" class="py-20 bg-pop-lightBg border-t-4 border-pop-text">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="text-sm font-black text-pop-cyan uppercase tracking-widest"><i
+                        class="fa-solid fa-music"></i> DISCOGRAPHY</span>
+                <h2 class="font-black text-3xl sm:text-5xl text-pop-text mt-1">楽曲＆ディスコグラフィ</h2>
+                <p class="text-xs font-bold text-pop-text/70 mt-2">試聴ボタンを押して「おばさん,s 隊」のポップソングをチェック！</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Track 1 -->
+                <div
+                    class="bg-white rounded-3xl p-6 border-3 border-pop-text shadow-pop flex flex-col justify-between group">
+                    <div>
+                        <div
+                            class="aspect-square rounded-2xl overflow-hidden mb-6 border-2 border-pop-text relative bg-gradient-to-tr from-pop-pink via-pop-yellow to-pop-cyan flex items-center justify-center p-6 shadow-inner">
+                            <i
+                                class="fa-solid fa-compact-disc text-8xl text-white opacity-80 group-hover:rotate-180 transition-transform duration-700"></i>
+                            <button onclick="playAudioTrack('おばさんになってみたい', 'obasan.mp3')"
+                                class="absolute inset-0 m-auto w-16 h-16 rounded-full bg-pop-yellow border-2 border-pop-text text-pop-text font-black text-xl flex items-center justify-center shadow-pop hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-play"></i>
+                            </button>
+                        </div>
+                        <span
+                            class="text-[11px] font-black uppercase tracking-wider text-pop-pink bg-pop-pink/10 px-3 py-1 rounded-full border border-pop-pink/30">1st
+                            Single</span>
+                        <h3 class="font-black text-xl text-pop-text mt-3">おばさんになってみたい</h3>
+                        <p class="text-xs text-pop-text/70 mt-1 font-bold">2026.10.25 Release</p>
+                    </div>
+                </div>
+
+
+                <!-- Track 2 -->
+                <div
+                    class="bg-white rounded-3xl p-6 border-3 border-pop-text shadow-pop flex flex-col justify-between group">
+                    <div>
+                        <div
+                            class="aspect-square rounded-2xl overflow-hidden mb-6 border-2 border-pop-text relative bg-gradient-to-tr from-pop-cyan via-pop-purple to-pop-pink flex items-center justify-center p-6 shadow-inner">
+                            <i
+                                class="fa-solid fa-music text-8xl text-white opacity-80 group-hover:scale-110 transition-transform duration-500"></i>
+                            <button onclick="playAudioTrack('its おば', 'obasan3.mp3')"
+                                class="absolute inset-0 m-auto w-16 h-16 rounded-full bg-pop-cyan border-2 border-pop-text text-white font-black text-xl flex items-center justify-center shadow-pop hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-play"></i>
+                            </button>
+                        </div>
+                        <span
+                            class="text-[11px] font-black uppercase tracking-wider text-pop-cyan bg-pop-cyan/10 px-3 py-1 rounded-full border border-pop-cyan/30">Digital
+                            Single</span>
+                        <h3 class="font-black text-xl text-pop-text mt-3">its おば</h3>
+                        <p class="text-xs text-pop-text/70 mt-1 font-bold">2026.07.14 Release</p>
+                    </div>
+
+                </div>
+
+                <!-- Track 3 -->
+                <div
+                    class="bg-white rounded-3xl p-6 border-3 border-pop-text shadow-pop flex flex-col justify-between group">
+                    <div>
+                        <div
+                            class="aspect-square rounded-2xl overflow-hidden mb-6 border-2 border-pop-text relative bg-gradient-to-tr from-pop-orange via-pop-yellow to-pop-pink flex items-center justify-center p-6 shadow-inner">
+                            <i
+                                class="fa-solid fa-sun text-8xl text-white opacity-80 group-hover:rotate-45 transition-transform duration-500"></i>
+                            <button onclick="playAudioTrack('おばさん　構文', 'obasan2.mp3')"
+                                class="absolute inset-0 m-auto w-16 h-16 rounded-full bg-pop-orange border-2 border-pop-text text-white font-black text-xl flex items-center justify-center shadow-pop hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-play"></i>
+                            </button>
+                        </div>
+                        <span
+                            class="text-[11px] font-black uppercase tracking-wider text-pop-orange bg-pop-orange/10 px-3 py-1 rounded-full border border-pop-orange/30">1st
+                            EP</span>
+                        <h3 class="font-black text-xl text-pop-text mt-3">おばさん　構文</h3>
+                        <p class="text-xs text-pop-text/70 mt-1 font-bold">2026.03.03 Release</p>
+
+                    </div>
+                </div>
+    </section>
+
+    <!-- LIVE SCHEDULE SECTION -->
+    <section id="schedule" class="py-20 bg-white border-t-4 border-pop-text">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                <div>
+                    <span
+                        class="text-sm font-black text-pop-orange uppercase tracking-widest flex items-center gap-1"><i
+                            class="fa-solid fa-ticket"></i> LIVE TOUR</span>
+                    <h2 class="font-black text-3xl sm:text-4xl text-pop-text mt-1">ライブ・イベント日程</h2>
+                </div>
+                <p class="text-xs font-bold text-pop-text/70 mt-2 md:mt-0">FC会員は優先先行予約＆VIP席応募が可能です！</p>
+            </div>
+
+            <!-- Schedule Cards List -->
+            <div class="space-y-4 max-w-5xl mx-auto">
+                <!-- Event 1 -->
+                <div
+                    class="bg-pop-lightBg p-6 rounded-3xl border-3 border-pop-text shadow-pop flex flex-col md:flex-row md:items-center justify-between gap-6 hover:bg-white transition-all">
+                    <div class="flex items-center gap-6">
+                        <div
+                            class="text-center w-24 flex-shrink-0 bg-pop-yellow p-3 rounded-2xl border-2 border-pop-text shadow-pop">
+                            <span class="text-xs font-black uppercase text-pop-text block">1月</span>
+                            <span class="font-black text-3xl text-pop-text">15</span>
+                            <span class="text-[10px] font-bold block text-pop-pink">金曜日</span>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2 mb-1">
+                                <span
+                                    class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-pop-pink text-white border border-pop-text">FC最速先行中</span>
+                                <span class="text-xs font-bold text-pop-text/70">パリ日公演</span>
+                            </div>
+                            <h3 class="font-black text-xl text-pop-text">パリ日　・ TOUR 2027 OPENING</h3>
+                        </div>
+                    </div>
+                    <div>
+                        <button onclick="openTicketModal('パリ日公演', '2027年1月15日(金)', '￥0.00')"
+                            class="w-full md:w-auto px-6 py-3 rounded-full text-xs font-black bg-pop-pink text-white border-2 border-pop-text shadow-pop hover:bg-pop-orange transition-all">
+                            FC先行チケットを予約
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Event 2 -->
+                <div
+                    class="bg-pop-lightBg p-6 rounded-3xl border-3 border-pop-text shadow-pop flex flex-col md:flex-row md:items-center justify-between gap-6 hover:bg-white transition-all">
+                    <div class="flex items-center gap-6">
+                        <div
+                            class="text-center w-24 flex-shrink-0 bg-pop-cyan p-3 rounded-2xl border-2 border-pop-text shadow-pop text-white">
+                            <span class="text-xs font-black uppercase block">?</span>
+                            <span class="font-black text-3xl">?</span>
+                            <span class="text-[10px] font-bold block text-pop-yellow">?</span>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2 mb-1">
+                                <span
+                                    class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-pop-cyan text-white border border-pop-text">?</span>
+                                <span class="text-xs font-bold text-pop-text/70">?</span>
+                            </div>
+                            <h3 class="font-black text-xl text-pop-text">?</h3>
+                        </div>
+                    </div>
+                    <div>
+                        <button onclick="openTicketModal('?', '?', '?')"
+                            class="w-full md:w-auto px-6 py-3 rounded-full text-xs font-black bg-pop-cyan text-white border-2 border-pop-text shadow-pop hover:bg-pop-pink transition-all">
+                            FC先行チケットを予約
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PHOTO GALLERY -->
+    <section id="gallery" class="py-20 bg-pop-lightBg border-t-4 border-pop-text">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="text-sm font-black text-pop-purple uppercase tracking-widest"><i
+                        class="fa-solid fa-camera"></i> GALLERY</span>
+                <h2 class="font-black text-3xl sm:text-5xl text-pop-text mt-1">フォトギャラリー</h2>
+                <p class="text-xs font-bold text-pop-text/70 mt-2">タップして拡大表示できます！</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="relative rounded-3xl overflow-hidden aspect-square border-3 border-pop-text shadow-pop cursor-pointer group bg-white"
+                    onclick="openLightbox('https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=1200&q=80', '東京アリーナステージショット')">
+                    <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=600&q=80"
+                        alt="Gallery Photo 1"
+                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div
+                        class="absolute inset-0 bg-pop-pink/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                        <span
+                            class="text-xs font-black text-white bg-pop-text px-3 py-1 rounded-full border border-white">東京アリーナステージ</span>
+                    </div>
+                </div>
+
+                <div class="relative rounded-3xl overflow-hidden aspect-square border-3 border-pop-text shadow-pop cursor-pointer group bg-white"
+                    onclick="openLightbox('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=1200&q=80', 'スタジオレコーディング風景')">
+                    <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=600&q=80"
+                        alt="Gallery Photo 2"
+                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div
+                        class="absolute inset-0 bg-pop-cyan/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                        <span
+                            class="text-xs font-black text-white bg-pop-text px-3 py-1 rounded-full border border-white">スタジオレコーディング</span>
+                    </div>
+                </div>
+
+                <div class="relative rounded-3xl overflow-hidden aspect-square border-3 border-pop-text shadow-pop cursor-pointer group bg-white"
+                    onclick="openLightbox('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1200&q=80', 'MV撮影オフショット')">
+                    <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80"
+                        alt="Gallery Photo 3"
+                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div
+                        class="absolute inset-0 bg-pop-yellow/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                        <span
+                            class="text-xs font-black text-pop-text bg-pop-yellow px-3 py-1 rounded-full border border-pop-text">MV撮影オフショット</span>
+                    </div>
+                </div>
+
+                <div class="relative rounded-3xl overflow-hidden aspect-square border-3 border-pop-text shadow-pop cursor-pointer group bg-white"
+                    onclick="openLightbox('https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1200&q=80', 'ファンミーティング会場')">
+                    <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=600&q=80"
+                        alt="Gallery Photo 4"
+                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div
+                        class="absolute inset-0 bg-pop-orange/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                        <span
+                            class="text-xs font-black text-white bg-pop-text px-3 py-1 rounded-full border border-white">ファンミーティング</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CHEER WALL / FAN BOARD -->
+    <section id="cheer" class="py-20 bg-white border-t-4 border-pop-text">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                <!-- Submission Form -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div>
+                        <span class="text-sm font-black text-pop-pink uppercase tracking-widest"><i
+                                class="fa-solid fa-heart"></i> CHEER WALL</span>
+                        <h2 class="font-black text-3xl text-pop-text mt-1">みんなの応援メッセージ掲示板</h2>
+                        <p class="text-xs font-bold text-pop-text/70 mt-2">「おばさん,s 隊」へ応援メッセージを送ろう！カラフルな付箋カードで飾られるよ☆</p>
+                    </div>
+
+                    <form id="cheer-form" onsubmit="postCheerMessage(event)"
+                        class="bg-pop-lightBg p-6 rounded-3xl border-3 border-pop-text shadow-pop space-y-4">
+                        <div>
+                            <label class="block text-xs font-black text-pop-text mb-1 uppercase">ニックネーム</label>
+                            <input type="text" id="cheer-author" required placeholder="例：はるぴょん"
+                                class="w-full px-4 py-3 rounded-2xl bg-white border-2 border-pop-text text-pop-text placeholder-pop-text/40 text-xs font-bold focus:outline-none focus:border-pop-pink">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-black text-pop-text mb-1 uppercase">カードのカラー</label>
+                            <div class="flex gap-3">
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="card-color" value="pink" checked class="peer hidden">
+                                    <span
+                                        class="w-8 h-8 rounded-full bg-pop-pink border-2 border-pop-text block peer-checked:ring-4 peer-checked:ring-pop-text"></span>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="card-color" value="yellow" class="peer hidden">
+                                    <span
+                                        class="w-8 h-8 rounded-full bg-pop-yellow border-2 border-pop-text block peer-checked:ring-4 peer-checked:ring-pop-text"></span>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="card-color" value="cyan" class="peer hidden">
+                                    <span
+                                        class="w-8 h-8 rounded-full bg-pop-cyan border-2 border-pop-text block peer-checked:ring-4 peer-checked:ring-pop-text"></span>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="card-color" value="orange" class="peer hidden">
+                                    <span
+                                        class="w-8 h-8 rounded-full bg-pop-orange border-2 border-pop-text block peer-checked:ring-4 peer-checked:ring-pop-text"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-black text-pop-text mb-1 uppercase">応援メッセージ</label>
+                            <textarea id="cheer-message" rows="3" required placeholder="新曲最高でした！"
+                                class="w-full px-4 py-3 rounded-2xl bg-white border-2 border-pop-text text-pop-text placeholder-pop-text/40 text-xs font-bold focus:outline-none focus:border-pop-pink resize-none"></textarea>
+                        </div>
+                        <button type="submit"
+                            class="w-full py-3.5 rounded-full font-black text-xs uppercase tracking-widest text-white bg-pop-pink border-2 border-pop-text shadow-pop hover:bg-pop-orange transition-all">
+                            メッセージを送信！ <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </form>
+
+                </div>
+
+                <!-- Live Message Board Grid -->
+                <div class="lg:col-span-7">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-black text-pop-text">みんなの投稿 (<span id="cheer-count">0</span>件)</span>
+                        <span class="text-[11px] font-black text-pop-pink"><i class="fa-solid fa-sparkles"></i>
+                            リアルタイム表示中</span>
+                    </div>
+
+                    <div id="cheer-posts-container"
+                        class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-h-[500px] overflow-y-auto pr-2">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- FOOTER -->
+    <footer class="mt-auto border-t-4 border-pop-text bg-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <!-- Brand Footer -->
+                <a href="#" class="flex items-center gap-2">
+                    <div
+                        class="w-9 h-9 rounded-xl bg-pop-pink text-white flex items-center justify-center font-black text-lg shadow-pop">
+                        ★
+                    </div>
+                    <span class="font-black text-xl tracking-wider text-pop-text">
+                        おばさん,s 隊 ファンクラブ
+                    </span>
+                </a>
+
+                <p class="text-xs font-bold text-pop-text/60">
+                    &copy; 2026 おばさん,s 隊. All Rights Reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="audio-player-bar"
+        class="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:max-w-md z-40 bg-white border-3 border-pop-text rounded-3xl p-4 shadow-pop-lg hidden flex items-center gap-4">
+
+        <div
+            class="w-12 h-12 rounded-2xl bg-pop-pink text-white flex items-center justify-center font-black text-xl flex-shrink-0 shadow-pop">
+            <i class="fa-solid fa-music"></i>
+        </div>
+
+        <div class="flex-grow min-w-0">
+            <p id="player-title" class="font-black text-xs text-pop-text truncate"></p>
+
+            <p id="player-time" class="text-[10px] font-bold text-pop-pink">
+                試聴中... 0:00 / 0:00
+            </p>
+
+            <div class="w-full bg-pop-lightBg h-2 rounded-full overflow-hidden border border-pop-text mt-1">
+                <div id="player-progress" class="bg-pop-yellow h-full w-0 transition-all duration-200">
+                </div>
+            </div>
+        </div>
+
+        <button onclick="document.getElementById('audio-player-bar').classList.add('hidden');"
+            class="w-8 h-8 rounded-full bg-pop-lightBg border border-pop-text text-pop-text font-black flex items-center justify-center text-xs hover:bg-pop-pink hover:text-white">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <audio id="audio-player" preload="metadata" class="hidden">
+            <source id="audio-source" src="" type="audio/mpeg">
+        </audio>
+
+    </div>
+
+
+    <div id="news-modal"
+        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-pop-text/50 backdrop-blur-sm hidden">
+        <div class="bg-white max-w-lg w-full rounded-3xl p-6 sm:p-8 border-4 border-pop-text shadow-pop-lg space-y-4">
+            <div class="flex justify-between items-start">
+                <h3 id="news-modal-title" class="font-black text-2xl text-pop-text"></h3>
+                <button onclick="closeModal('news-modal')" class="text-pop-text hover:text-pop-pink text-xl"><i
+                        class="fa-solid fa-circle-xmark"></i></button>
+            </div>
+            <p id="news-modal-body"
+                class="text-xs sm:text-sm font-bold text-pop-text/80 leading-relaxed whitespace-pre-line"></p>
+            <button onclick="closeModal('news-modal')"
+                class="w-full py-3 rounded-full font-black bg-pop-yellow text-pop-text border-2 border-pop-text shadow-pop hover:bg-pop-pink hover:text-white text-xs uppercase tracking-widest transition-all">
+                閉じる
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL: TICKET RESERVATION -->
+    <div id="ticket-modal"
+        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-pop-text/50 backdrop-blur-sm hidden">
+        <div class="bg-white max-w-md w-full rounded-3xl p-6 sm:p-8 border-4 border-pop-text shadow-pop-lg space-y-4">
+            <div class="flex justify-between items-start">
+                <div>
+                    <span class="text-xs font-black text-pop-pink uppercase">FC最速優先先行予約</span>
+                    <h3 id="ticket-modal-title" class="font-black text-2xl text-pop-text mt-1"></h3>
+                </div>
+                <button onclick="closeModal('ticket-modal')" class="text-pop-text hover:text-pop-pink text-xl"><i
+                        class="fa-solid fa-circle-xmark"></i></button>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-pop-lightBg border-2 border-pop-text space-y-1 text-xs font-bold">
+                <p>公演日時: <span id="ticket-modal-date" class="text-pop-pink font-black"></span></p>
+                <p>チケット価格: <span id="ticket-modal-price" class="text-pop-text font-black"></span></p>
+            </div>
+
+            <form onsubmit="handleTicketReserve(event)" class="space-y-3">
+                <div>
+                    <label class="block text-xs font-black text-pop-text mb-1 uppercase">会員ID または メールアドレス</label>
+                    <input type="email" required placeholder="haruka-fan@example.com"
+                        class="w-full px-4 py-3 rounded-2xl bg-pop-lightBg border-2 border-pop-text text-pop-text text-xs font-bold focus:outline-none focus:border-pop-pink">
+                </div>
+                <div>
+                    <label class="block text-xs font-black text-pop-text mb-1 uppercase">希望枚数</label>
+                    <select
+                        class="w-full px-4 py-3 rounded-2xl bg-pop-lightBg border-2 border-pop-text text-pop-text text-xs font-bold focus:outline-none focus:border-pop-pink">
+                        <option>1枚</option>
+                        <option selected>2枚</option>
+                        <option>3枚</option>
+                        <option>4枚</option>
+                    </select>
+                </div>
+                <button type="submit"
+                    class="w-full py-3.5 rounded-full font-black text-xs uppercase tracking-widest text-white bg-pop-pink border-2 border-pop-text shadow-pop hover:bg-pop-orange transition-all mt-2">
+                    先行に応募する！ ✨
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: FC REGISTRATION -->
+    <div id="register-modal"
+        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-pop-text/50 backdrop-blur-sm hidden">
+        <div class="bg-white max-w-md w-full rounded-3xl p-6 sm:p-8 border-4 border-pop-text shadow-pop-lg space-y-4">
+            <div class="flex justify-between items-start">
+                <div>
+                    <span class="text-xs font-black text-pop-cyan uppercase">入会手続き</span>
+                    <h3 id="register-plan-title" class="font-black text-2xl text-pop-text mt-1"></h3>
+                </div>
+                <button onclick="closeModal('register-modal')" class="text-pop-text hover:text-pop-pink text-xl"><i
+                        class="fa-solid fa-circle-xmark"></i></button>
+            </div>
+
+            <form onsubmit="handleRegisterSubmit(event)" class="space-y-3">
+                <div>
+                    <label class="block text-xs font-black text-pop-text mb-1 uppercase">お名前</label>
+                    <input type="text" required placeholder="田中 花子"
+                        class="w-full px-4 py-3 rounded-2xl bg-pop-lightBg border-2 border-pop-text text-pop-text text-xs font-bold focus:outline-none focus:border-pop-pink">
+                </div>
+                <div>
+                    <label class="block text-xs font-black text-pop-text mb-1 uppercase">メールアドレス</label>
+                    <input type="email" required placeholder="fan@example.com"
+                        class="w-full px-4 py-3 rounded-2xl bg-pop-lightBg border-2 border-pop-text text-pop-text text-xs font-bold focus:outline-none focus:border-pop-pink">
+                </div>
+                <div>
+                    <label class="block text-xs font-black text-pop-text mb-1 uppercase">パスワード</label>
+                    <input type="password" required placeholder="••••••••"
+                        class="w-full px-4 py-3 rounded-2xl bg-pop-lightBg border-2 border-pop-text text-pop-text text-xs font-bold focus:outline-none focus:border-pop-pink">
+                </div>
+                <button type="submit"
+                    class="w-full py-3.5 rounded-full font-black text-xs uppercase tracking-widest text-pop-text bg-pop-yellow border-2 border-pop-text shadow-pop hover:bg-pop-pink hover:text-white transition-all mt-2">
+                    入会を完了する！ 🎉
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: LIGHTBOX -->
+    <div id="lightbox-modal"
+        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-pop-text/80 backdrop-blur-md hidden"
+        onclick="closeModal('lightbox-modal')">
+        <div class="relative max-w-4xl max-h-[90vh]" onclick="event.stopPropagation()">
+            <img id="lightbox-img" src="" alt="拡大画像"
+                class="max-w-full max-h-[80vh] rounded-3xl border-4 border-white shadow-pop-lg object-contain">
+            <p id="lightbox-caption" class="text-center text-sm font-black text-white mt-4 tracking-wider"></p>
+            <button onclick="closeModal('lightbox-modal')"
+                class="absolute -top-12 right-0 text-white text-2xl hover:text-pop-pink"><i
+                    class="fa-solid fa-xmark"></i></button>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toast-container" class="fixed bottom-6 right-6 z-50 space-y-3"></div>
+
+    <!-- INTERACTIVE JAVASCRIPT LOGIC -->
+    <script>
+        const defaultCheers = [];
+
+        function getCheerMessages() {
+            const saved = localStorage.getItem('haruka_cheer_board');
+            if (saved) {
+                try { return JSON.parse(saved); } catch (e) { return defaultCheers; }
+            }
+            localStorage.setItem('haruka_cheer_board', JSON.stringify(defaultCheers));
+            return defaultCheers;
+        }
+
+        function renderCheerBoard() {
+            const posts = getCheerMessages();
+            const container = document.getElementById('cheer-posts-container');
+            const cheerCount = document.getElementById('cheer-count');
+
+            if (cheerCount) {
+                cheerCount.innerText = posts.length;
+            }
+
+            const colorClasses = {
+                pink: "bg-pop-pink/20 border-pop-pink text-pop-text",
+                yellow: "bg-pop-yellow/30 border-pop-yellow text-pop-text",
+                cyan: "bg-pop-cyan/20 border-pop-cyan text-pop-text",
+                orange: "bg-pop-orange/20 border-pop-orange text-pop-text"
+            };
+
+            container.innerHTML = posts.map(post => `
+                <div class="${colorClasses[post.color] || colorClasses.pink} p-4 rounded-3xl border-3 shadow-pop space-y-2 transform hover:scale-102 transition-transform">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-black text-pop-text">★ ${escapeHtml(post.author)} さん</span>
+                        <span class="text-[10px] font-bold text-pop-text/50">${post.time}</span>
+                    </div>
+                    <p class="text-xs font-bold leading-relaxed">${escapeHtml(post.message)}</p>
+                </div>
+            `).join('');
+        }
+
+        function postCheerMessage(e) {
+            e.preventDefault();
+            const author = document.getElementById('cheer-author').value.trim();
+            const message = document.getElementById('cheer-message').value.trim();
+            const color = document.querySelector('input[name="card-color"]:checked').value;
+
+            if (!author || !message) return;
+
+            const posts = getCheerMessages();
+            const newPost = {
+                id: Date.now(),
+                author,
+                color,
+                message,
+                time: "たった今"
+            };
+
+            posts.unshift(newPost);
+            localStorage.setItem('haruka_cheer_board', JSON.stringify(posts));
+            renderCheerBoard();
+
+            document.getElementById('cheer-form').reset();
+            showToast('応援メッセージを掲示板に投稿しました！✨');
+        }
+
+
+        const audioPlayer = document.getElementById('audio-player');
+        const audioSource = document.getElementById('audio-source');
+
+        function formatAudioTime(seconds) {
+            if (!Number.isFinite(seconds)) return '0:00';
+            const min = Math.floor(seconds / 60);
+            const sec = Math.floor(seconds % 60);
+            return `${min}:${String(sec).padStart(2, '0')}`;
+        }
+
+        // 音楽再生
+        function playAudioTrack(title, audioUrl) {
+            const player = document.getElementById('audio-player-bar');
+            const titleElement = document.getElementById('player-title');
+            const timeElement = document.getElementById('player-time');
+            const progressElement = document.getElementById('player-progress');
+            audioPlayer.pause();
+            audioPlayer.currentTime = 0;
+            titleElement.innerText = title;
+            timeElement.innerText = '読み込み中...';
+            progressElement.style.width = '0%';
+            audioSource.src = audioUrl;
+
+            audioPlayer.load();
+            player.classList.remove('hidden');
+            audioPlayer.play()
+                .then(() => {
+                    showToast(`「${title}」の試聴を開始しました！♪`);
+                })
+                .catch(error => {
+                    console.error('Audio Error:', error);
+                    timeElement.innerText = '再生できませんでした';
+                });
+        }
+
+        audioPlayer.addEventListener('timeupdate', () => {
+            const current = audioPlayer.currentTime;
+            const duration = audioPlayer.duration;
+            const timeElement = document.getElementById('player-time');
+            const progressElement = document.getElementById('player-progress');
+            timeElement.innerText =
+                `試聴中... ${formatAudioTime(current)} / ${formatAudioTime(duration)}`;
+            if (Number.isFinite(duration) && duration > 0) {
+                const percent = (current / duration) * 100;
+                progressElement.style.width = `${percent}%`;
+            }
+        });
+
+        audioPlayer.addEventListener('loadedmetadata', () => {
+            document.getElementById('player-time').innerText =
+                `試聴中... 0:00 / ${formatAudioTime(audioPlayer.duration)}`;
+        });
+
+        audioPlayer.addEventListener('ended', () => {
+            document.getElementById('player-time').innerText =
+                `再生終了 ${formatAudioTime(audioPlayer.duration)} / ${formatAudioTime(audioPlayer.duration)}`;
+            document.getElementById('player-progress').style.width = '100%';
+        });
+
+        audioPlayer.addEventListener('error', () => {
+            document.getElementById('player-time').innerText =
+                '音声の読み込みに失敗しました';
+        });
+
+        function closeAudioPlayer() {
+
+            audioPlayer.pause();
+            audioPlayer.currentTime = 0;
+
+            document.getElementById('audio-player-bar').classList.add('hidden');
+            document.getElementById('player-progress').style.width = '0%';
+        }
+
+
+        // Navigation Smooth Scroll
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+
+        document.getElementById('mobile-menu-btn').addEventListener('click', toggleMobileMenu);
+
+        // Category Filter for News
+        function filterNews(cat) {
+            document.querySelectorAll('.news-tab').forEach(tab => {
+                if (tab.getAttribute('data-cat') === cat) {
+                    tab.classList.add('bg-pop-pink', 'text-white');
+                    tab.classList.remove('bg-white', 'text-pop-text');
+                } else {
+                    tab.classList.remove('bg-pop-pink', 'text-white');
+                    tab.classList.add('bg-white', 'text-pop-text');
+                }
+            });
+
+            document.querySelectorAll('.news-item').forEach(item => {
+                if (cat === 'all' || item.getAttribute('data-cat') === cat) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Modals Operations
+        function openNewsModal(title, body) {
+            document.getElementById('news-modal-title').innerText = title;
+            document.getElementById('news-modal-body').innerText = body;
+            document.getElementById('news-modal').classList.remove('hidden');
+        }
+
+        function openTicketModal(title, date, price) {
+            document.getElementById('ticket-modal-title').innerText = title;
+            document.getElementById('ticket-modal-date').innerText = date;
+            document.getElementById('ticket-modal-price').innerText = price;
+            document.getElementById('ticket-modal').classList.remove('hidden');
+        }
+
+        function openRegisterModal(plan) {
+            document.getElementById('register-plan-title').innerText = plan;
+            document.getElementById('register-modal').classList.remove('hidden');
+        }
+
+        function openLightbox(src, caption) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox-caption').innerText = caption;
+            document.getElementById('lightbox-modal').classList.remove('hidden');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+
+        function handleTicketReserve(e) {
+            e.preventDefault();
+            closeModal('ticket-modal');
+            showToast('チケット先行に応募完了しました！抽選結果をお待ちください。');
+        }
+
+        function handleRegisterSubmit(e) {
+            e.preventDefault();
+            closeModal('register-modal');
+            showToast('POP☆PARADEへのご入会ありがとうございます！🎉');
+        }
+
+        // Toast Notification Helper
+        function showToast(msg) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'bg-white border-3 border-pop-text px-5 py-3.5 rounded-2xl text-xs font-black text-pop-text shadow-pop flex items-center gap-2 transition-all duration-300 transform translate-y-4 opacity-0';
+            toast.innerHTML = `<span class="text-pop-pink text-base">★</span> ${msg}`;
+
+            container.appendChild(toast);
+            setTimeout(() => toast.classList.remove('translate-y-4', 'opacity-0'), 10);
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // HTML Escaper for Safety
+        function escapeHtml(str) {
+            return str.replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        // Page Load Init
+        window.addEventListener('DOMContentLoaded', () => {
+            renderCheerBoard();
+        });
+    </script>
+</body>
+
+</html>
