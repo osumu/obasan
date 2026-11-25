@@ -45,21 +45,184 @@
             }
         }
 
+        function showScreen(id) {
+            const ids = [
+                "auth-screen",
+                "quiz-screen",
+                "captcha-screen",
+                "memory-screen",
+                "permission-screen"
+            ];
+
+            ids.forEach(x => {
+                document.getElementById(x).style.display = "none";
+            });
+
+            document.getElementById(id).style.display = "block";
+        }
+
         function checkPassword() {
-            const input = document.getElementById("password-input").value;
-            if (input === "obasanfan") {
-                document.getElementById("auth-screen").style.display = "none";
-                document.getElementById("protected-content").style.display = "block";
-                sessionStorage.setItem("authenticated", "true");
+            const input =
+                document.getElementById("password-input").value;
+
+            if (input === "obasanfan666") {
+                showScreen("quiz-screen");
+                startQuiz();
             } else {
-                document.getElementById("error-msg").textContent = "パスワードが違います。";
+                document.getElementById("error-msg").textContent =
+                    "パスワードが違います。";
             }
         }
 
+        const questions = [
+            {q: "おばさん,s 隊最初の曲は？\n１:おばさんになってみたい　２：おばさん構文", a: "1"},
+            {q: "おばさん,s 隊の昔の名前は？\n１：おばさんズ　２：おばさん,s", a: "1"}
+        ];
 
+        let quizIndex = 0;
+
+        function startQuiz() {
+            quizIndex = 0;
+            showQuestion();
+        }
+
+        function showQuestion() {
+            document.getElementById("quiz-title").textContent =
+                "第" + (quizIndex + 1) + "問 / 全2問";
+
+            document.getElementById("quiz-question").textContent =
+                questions[quizIndex].q;
+
+            document.getElementById("quiz-answer").value = "";
+            document.getElementById("quiz-error").textContent = "";
+        }
+
+        function checkQuiz() {
+            const answer =
+                document.getElementById("quiz-answer").value.trim();
+
+            if (answer !== questions[quizIndex].a) {
+                document.getElementById("quiz-error").textContent =
+                    "不正解です。もう一度！";
+                return;
+            }
+
+            quizIndex++;
+
+            if (quizIndex < questions.length) {
+                showQuestion();
+            } else {
+                showScreen("captcha-screen");
+            }
+        }
+
+        // STEP 3：疑似CAPTCHA
+        let captchaDone = false;
+        let captchaLoading = false;
+
+        function tg() {
+            if (captchaDone || captchaLoading) return;
+
+            captchaLoading = true;
+
+            document.getElementById("b1").style.border = "none";
+            document.getElementById("s1").style.display = "block";
+
+            setTimeout(() => {
+                captchaLoading = false;
+                captchaDone = true;
+
+                document.getElementById("s1").style.display = "none";
+                document.getElementById("b1").classList.add("x");
+                document.getElementById("c1").style.display = "block";
+
+                document.getElementById("a1").beginElement();
+
+                setTimeout(() => {
+                    showScreen("memory-screen");
+                    startMemory();
+                }, 800);
+
+            }, 900);
+        }
+        let correctPosition = -1;
+        let memoryActive = false;
+        let memoryTimer = null;
+
+        const colors = ["#ef3030", "#2878dd", "#16a34a", "#facc15", "#9333ea", "#f97316", "#ec4899", "#06b6d4", "#795548"];
+
+        function startMemory() {
+            const area = document.getElementById("memory-grid");
+            const buttons = [...area.querySelectorAll(".memory-btn")];
+
+            if (buttons.length !== 9) {
+                console.error("ボタンは9個必要です。");
+                return;
+            }
+
+            clearTimeout(memoryTimer);
+            memoryActive = false;
+            const shuffled = [...colors].sort(() => Math.random() - 0.5);
+            correctPosition = shuffled.indexOf("#ef3030");
+            buttons.forEach((button, index) => {
+                button.style.backgroundColor = shuffled[index];
+                button.disabled = true;
+            });
+
+            document.getElementById("memory-message").textContent =
+                "赤いボタンの位置を覚えてください！";
+
+            memoryTimer = setTimeout(() => {
+                buttons.forEach(button => {
+                    button.style.backgroundColor = "#888888";
+                    button.disabled = false;
+                });
+
+                memoryActive = true;
+                document.getElementById("memory-message").textContent =
+                    "赤かった場所をクリックしてください！";
+            }, 2000);
+        }
+
+        function selectMemoryButton(index) {
+            if (!memoryActive) return;
+            memoryActive = false;
+
+            if (index === correctPosition) {
+
+                const buttons = document.querySelectorAll(".memory-btn");
+                buttons[index].style.backgroundColor = "#16a34a";
+                showScreen("permission-screen");
+            } else {
+
+                document.getElementById("memory-message").textContent =
+                    "不正解！もう一度挑戦してください。";
+                setTimeout(() => {
+                    startMemory();
+                }, 1000);
+            }
+        }
+
+        document.addEventListener("click", function (event) {
+            const button = event.target.closest(".memory-btn");
+            if (!button) return;
+            const buttons = Array.from(
+                document.querySelectorAll("#memory-grid .memory-btn")
+            );
+            const index = buttons.indexOf(button);
+            if (index === -1) return;
+            selectMemoryButton(index);
+
+        });
+
+        function allowAccess() {
+            document.getElementById("permission-screen").style.display = "none";
+            document.getElementById("auth-screen").style.display = "none";
+            document.getElementById("protected-content").style.display = "block";
+            sessionStorage.setItem("authenticated", "true");
+        }
     </script>
     <style>
-        /* Custom Keyframe Animations for Pop Sparkles & Bouncing */
         @keyframes float-slow {
 
             0%,
@@ -142,6 +305,133 @@
         #protected-content {
             display: none;
         }
+
+
+        .r {
+            cursor: pointer;
+            width: 300px;
+            max-width: 100%;
+            margin: 20px auto;
+        }
+
+        .b {
+            display: flex;
+            align-items: center;
+            background: #f9f9f9;
+            border: 1px solid #d3d3d3;
+            border-radius: 3px;
+            height: 76px;
+            position: relative;
+            width: 100%;
+        }
+
+        .c {
+            width: 26px;
+            height: 100%;
+            margin: 0 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .i {
+            width: 27px;
+            height: 27px;
+            background: white;
+            border: 2px solid #c3c3c3;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .i.x {
+            opacity: 0;
+        }
+
+        .s {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sp {
+            border: 6px solid #4d90fe;
+            border-right-color: transparent;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .v {
+            width: 100%;
+            height: 100%;
+        }
+
+        .k {
+            fill: none;
+            stroke: #009e54;
+            stroke-width: 4.5;
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+        }
+
+        .t {
+            font-size: 16px;
+            flex: 1;
+        }
+
+        .l {
+            font-size: 10px;
+            color: #555;
+            margin-right: 12px;
+        }
+
+        .l img {
+            width: 32px;
+            display: block;
+        }
+
+
+        #memory-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            width: 100%;
+            max-width: 330px;
+            margin: 25px auto;
+        }
+
+        .memory-btn {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border: none;
+            border-radius: 12px;
+            background: #2878dd;
+            cursor: pointer;
+            touch-action: manipulation;
+        }
+
+        .memory-btn.red {
+            background: #ef3030;
+        }
+
+        .memory-btn:disabled {
+            cursor: default;
+        }
+
+        .memory-btn:active {
+            opacity: .8;
+        }
     </style>
 </head>
 
@@ -152,6 +442,67 @@
         <button onclick="checkPassword()">送信</button>
         <p id="error-msg" style="color: red;"></p>
     </div>
+
+    <div id="quiz-screen" style="display:none">
+        <h2 id="quiz-title">第1問 / 全2問</h2>
+        <p id="quiz-question"></p>
+        <input type="text" id="quiz-answer" placeholder="回答">
+        <button onclick="checkQuiz()">送信</button>
+        <p id="quiz-error" style="color:red"></p>
+    </div>
+
+    <div id="captcha-screen" style="display:none">
+        <h2>obaCAPTCHA</h2>
+        <div class="r" onclick="tg()">
+            <div class="b">
+                <div class="c">
+                    <div class="i" id="b1"></div>
+                    <div class="s" id="s1" style="display:none">
+                        <div class="sp"></div>
+                    </div>
+                    <div id="c1" style="display:none">
+                        <svg class="v" viewBox="0 0 48 48">
+                            <path class="k" d="M8 25 L20 36 L40 12" id="p1" pathLength="100">
+                                <animate attributeName="stroke-dashoffset" begin="indefinite" dur="0.7s" fill="freeze"
+                                    from="100" id="a1" to="0" />
+                            </path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="t">私はおばさん,s 隊のファンです</div>
+                <div class="l">
+                    <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png">
+                    obaCAPTCHA
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="memory-screen" style="display:none">
+        <h2>場所を覚えてください！</h2>
+        <p id="memory-message">
+            赤いボタンの位置を覚えてください。
+        </p>
+
+        <div id="memory-grid">
+            <button class="memory-btn"></button>
+            <button class="memory-btn"></button>
+            <button class="memory-btn"></button>
+            <button class="memory-btn"></button>
+            <button class="memory-btn"></button>
+            <button class="memory-btn"></button>
+            <button class="memory-btn"></button>
+            <button class="memory-btn"></button>
+            <button class="memory-btn"></button>
+        </div>
+    </div>
+
+    <div id="permission-screen" style="display:none">
+        <h2>認証成功！</h2>
+        <button onclick="allowAccess()">ここをクリック</button>
+    </div>
+
     <div id="protected-content"
         class="bg-pop-lightBg text-pop-text font-sans antialiased selection:bg-pop-pink selection:text-white min-h-screen flex flex-col tracking-wide">
 
