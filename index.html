@@ -75,8 +75,8 @@
         }
 
         const questions = [
-            {q: "おばさん,s 隊最初の曲は？\n１:おばさんになってみたい　２：おばさん構文", a: "1"},
-            {q: "おばさん,s 隊の昔の名前は？\n１：おばさんズ　２：おばさん,s", a: "1"}
+            { q: "おばさん,s 隊最初の曲は？\n１:おばさんになってみたい　２：おばさん構文\n３：It's おば　４：おばさんＸ", a: "1" },
+            { q: "おばさん,s 隊の昔の名前は？\n１：おばさんズ　２：おばさん,s隊\n３：おばさん,s 　４：おばさんズ隊", a: "3" }
         ];
 
         let quizIndex = 0;
@@ -90,8 +90,8 @@
             document.getElementById("quiz-title").textContent =
                 "第" + (quizIndex + 1) + "問 / 全2問";
 
-            document.getElementById("quiz-question").textContent =
-                questions[quizIndex].q;
+            document.getElementById("quiz-question").innerHTML =
+                questions[quizIndex].q.replace(/\n/g, "<br>");
 
             document.getElementById("quiz-answer").value = "";
             document.getElementById("quiz-error").textContent = "";
@@ -116,7 +116,6 @@
             }
         }
 
-        // STEP 3：疑似CAPTCHA
         let captchaDone = false;
         let captchaLoading = false;
 
@@ -145,6 +144,7 @@
 
             }, 900);
         }
+
         let correctPosition = -1;
         let memoryActive = false;
         let memoryTimer = null;
@@ -187,9 +187,7 @@
         function selectMemoryButton(index) {
             if (!memoryActive) return;
             memoryActive = false;
-
             if (index === correctPosition) {
-
                 const buttons = document.querySelectorAll(".memory-btn");
                 buttons[index].style.backgroundColor = "#16a34a";
                 showScreen("permission-screen");
@@ -443,16 +441,51 @@
         <p id="error-msg" style="color: red;"></p>
     </div>
 
-    <div id="quiz-screen" style="display:none">
-        <h2 id="quiz-title">第1問 / 全2問</h2>
-        <p id="quiz-question"></p>
-        <input type="text" id="quiz-answer" placeholder="回答">
-        <button onclick="checkQuiz()">送信</button>
-        <p id="quiz-error" style="color:red"></p>
+    <div id="quiz-screen"
+        class="hidden max-w-xl mx-auto bg-pop-lightBg border-4 border-pop-text rounded-3xl p-8 shadow-pop-lg">
+
+        <!-- タイトル -->
+        <h2 id="quiz-title" class="text-3xl font-black text-pop-purple text-center mb-6">
+            <i class="fa-solid fa-brain mr-2"></i>
+            第1問 / 全2問
+        </h2>
+
+        <!-- 問題 -->
+        <div class="bg-white border-4 border-pop-cyan rounded-2xl p-5 shadow-pop mb-6">
+            <p id="quiz-question" class="text-lg md:text-xl font-bold text-pop-text leading-relaxed text-center">
+                <i class="fa-solid fa-circle-question text-pop-cyan mr-2"></i>
+                問題文
+            </p>
+        </div>
+
+        <!-- 回答欄 -->
+        <div class="relative mb-4">
+            <i class="fa-solid fa-keyboard absolute left-4 top-1/2 -translate-y-1/2 text-pop-pink"></i>
+
+            <input type="text" id="quiz-answer" placeholder="回答を入力" class="w-full pl-12 pr-4 py-4 text-lg font-bold
+             bg-white border-4 border-pop-pink rounded-2xl
+             shadow-pop focus:outline-none
+             focus:ring-4 focus:ring-pop-pink/30">
+        </div>
+
+        <!-- ボタン -->
+        <button onclick="checkQuiz()" class="w-full bg-pop-yellow text-pop-text font-black text-xl
+           py-4 rounded-2xl border-4 border-pop-text
+           shadow-pop hover:translate-x-1 hover:translate-y-1
+           hover:shadow-none transition-all">
+            <i class="fa-solid fa-paper-plane mr-2"></i>
+            送信
+        </button>
+
+        <!-- エラー -->
+        <p id="quiz-error" class="mt-4 text-center font-bold text-red-500">
+        </p>
+
     </div>
 
+
     <div id="captcha-screen" style="display:none">
-        <h2>obaCAPTCHA</h2>
+        <h2 id="quiz-title" class="text-3xl font-black text-pop-purple text-center mb-6">obaCAPTCHA</h2>
         <div class="r" onclick="tg()">
             <div class="b">
                 <div class="c">
@@ -480,8 +513,8 @@
 
 
     <div id="memory-screen" style="display:none">
-        <h2>場所を覚えてください！</h2>
-        <p id="memory-message">
+        <h2 id="quiz-title" class="text-3xl font-black text-center mb-6">場所を覚えてください！</h2>
+        <p id="memory-message" style="text-align:center;">
             赤いボタンの位置を覚えてください。
         </p>
 
@@ -498,9 +531,19 @@
         </div>
     </div>
 
-    <div id="permission-screen" style="display:none">
-        <h2>認証成功！</h2>
-        <button onclick="allowAccess()">ここをクリック</button>
+    <div id="permission-screen"
+        class="hidden max-w-md mx-auto bg-pop-lightBg border-4 border-pop-text rounded-3xl p-8 shadow-pop-lg text-center animate-popIn">
+        <i class="fa-solid fa-check-circle text-7xl text-pop-cyan mb-5"></i>
+        <h2 class="font-black text-pop-orange mb-5">認証成功！</h2>
+
+        <button onclick="allowAccess()" class="w-full bg-pop-cyan text-white font-black text-xl
+           py-4 rounded-2xl border-4 border-pop-text
+           shadow-pop hover:translate-x-1 hover:translate-y-1
+           hover:shadow-none transition-all duration-150">
+            <i class="fa-solid fa-mouse-pointer mr-2"></i>
+            ここをクリック
+        </button>
+
     </div>
 
     <div id="protected-content"
@@ -740,8 +783,6 @@
                                 <span class="text-xs font-bold text-pop-text/60">2026.10.12</span>
                             </div>
                             <h3 class="font-black text-lg text-pop-text mb-2 line-clamp-2">【FC限定】缶バッチなどの特典配布のお知らせ</h3>
-                            <p class="text-xs text-pop-text/70 leading-relaxed line-clamp-3">
-                                MV撮影の裏側に密着した限定動画を公開！さらに来週はFC限定オンライン生配信も実施予定です！</p>
                         </div>
                         <button
                             onclick="openNewsModal('【FC限定】缶バッチなどの特典配布', 'FC会員限定の特典として、特別な缶バッチなどいろいろなグッズが配布されます！お楽しみに！')"
@@ -1218,7 +1259,7 @@
             function getCheerMessages() {
                 const saved = localStorage.getItem('haruka_cheer_board');
                 if (saved) {
-                    try {return JSON.parse(saved);} catch (e) {return defaultCheers;}
+                    try { return JSON.parse(saved); } catch (e) { return defaultCheers; }
                 }
                 localStorage.setItem('haruka_cheer_board', JSON.stringify(defaultCheers));
                 return defaultCheers;
@@ -1304,7 +1345,7 @@
                 player.classList.remove('hidden');
                 audioPlayer.play()
                     .then(() => {
-                        showToast(`「${title}」の試聴を開始しました！♪`);
+                        console.log('Audio playback started');
                     })
                     .catch(error => {
                         console.error('Audio Error:', error);
@@ -1354,7 +1395,7 @@
             // Navigation Smooth Scroll
             function scrollToSection(id) {
                 const el = document.getElementById(id);
-                if (el) el.scrollIntoView({behavior: 'smooth'});
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
             }
 
             function toggleMobileMenu() {
